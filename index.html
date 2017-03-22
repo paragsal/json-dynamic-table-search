@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <p><br/><br/></p>
+
+    <div class="container">
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..." style="width: 100%; padding: 12px 20px 12px 40px; font-size: 16px;">
+        <p><br/></p>
+        <table class="table table-bordered table-striped table-hover" id="myTable">
+        
+          <tr>
+            <th>Player</th>
+            <th>Team</th>
+            <th>Position</th>
+            <th>G</th>
+            <th>AB</th>
+            <th>R</th>
+            <th>H</th>
+            <th>2B</th>
+            <th>3B</th>
+            <th>HR</th>
+            <th>RBI</th>
+            <th>BB</1th>
+            <th>SO</th>
+            <th>SB</th>
+            <th>CS</th>
+            <th>AVG</th>
+            <th>OBP</th>
+            <th>SLG</th>
+            <th>OPS</th>
+          </tr>
+         
+        </table>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+      $.getJSON("baseball_stats.json", function(data) {
+        var items = [];
+        $.each(data, function( key, val){
+          items.push("<tr>");
+          items.push("<td id='"+key+"'>"+val.Player+"</td>");
+          items.push("<td id='"+key+"'>"+val.Team+"</td>");
+          items.push("<td id='"+key+"'>"+val.Pos+"</td>");
+          items.push("<td id='"+key+"'>"+val.G+"</td>");
+          items.push("<td id='"+key+"'>"+val.AB+"</td>");
+          items.push("<td id='"+key+"'>"+val.R+"</td>");
+          items.push("<td id='"+key+"'>"+val.H+"</td>");
+          items.push("<td id='"+key+"'>"+val["2B"]+"</td>");
+          items.push("<td id='"+key+"'>"+val["3B"]+"</td>");
+          items.push("<td id='"+key+"'>"+val.HR+"</td>");
+          items.push("<td id='"+key+"'>"+val.RBI+"</td>");
+          items.push("<td id='"+key+"'>"+val.BB+"</td>");
+          items.push("<td id='"+key+"'>"+val.SO+"</td>");
+          items.push("<td id='"+key+"'>"+val.SB+"</td>");
+          items.push("<td id='"+key+"'>"+val.CS+"</td>");
+          items.push("<td id='"+key+"'>"+val.AVG+"</td>");
+          items.push("<td id='"+key+"'>"+val.OBP+"</td>");
+          items.push("<td id='"+key+"'>"+val.SLG+"</td>");
+          items.push("<td id='"+key+"'>"+val.OPS+"</td>");
+          items.push("</tr>");
+        });
+
+        $( "<tbody/>", {html: items.join("")} ).appendTo("table");
+      });
+
+      function myFunction() {
+          var input, filter, found, table, tr, td, i, j;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("myTable");
+          tr = table.getElementsByTagName("tr");
+          for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+              if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                  found = true;
+              }
+            }
+            if (found) {
+              tr[i].style.display = "";
+              found = false;
+            } 
+            else {
+              tr[i].style.display = "none";
+            }
+          }
+      }
+    </script>
+  </body>
+</html>
